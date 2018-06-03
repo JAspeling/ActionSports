@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ActionSports.API.Repositories;
+using ActionSports.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,8 @@ namespace ActionSports.API {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
+
+            services.AddTransient<IVenuesRepository, VenuesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
