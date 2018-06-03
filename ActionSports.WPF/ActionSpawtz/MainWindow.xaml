@@ -1,0 +1,40 @@
+﻿<telerik:RadWindow x:Class="ActionSpawtz.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:converters="clr-namespace:ActionSpawtz.Tools.Converters"
+        xmlns:local="clr-namespace:ActionSpawtz" Loaded="RadWindow_Loaded"
+        xmlns:views="clr-namespace:ActionSpawtz.Views"
+        mc:Ignorable="d"
+        Header="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <telerik:RadWindow.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
+    </telerik:RadWindow.Resources>
+    <Grid>
+        <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding BusyContent}">
+            <DockPanel Margin="5">
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,5">
+                    <TextBlock Text="Venue" Width="100" VerticalAlignment="Center" />
+                    <telerik:RadComboBox SelectedItem="{Binding SelectedVenue}" ItemsSource="{Binding Venues, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"/>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,5">
+                    <TextBlock Text="Leagues" Width="100" VerticalAlignment="Center" />
+                    <telerik:RadComboBox SelectedItem="{Binding SelectedLeague}" ItemsSource="{Binding Leagues}"/>
+                </DockPanel>
+                <DockPanel LastChildFill="False" DockPanel.Dock="Top" Margin="0,0,0,5">
+                    <telerik:RadButton Content="Fixtures" DockPanel.Dock="Right" Width="75" Margin="2" Command="{Binding GetFixturesCommand}"/>
+                    <telerik:RadButton Content="Standings" DockPanel.Dock="Right" Width="75" Margin="2" Command="{Binding GetStandingsCommand}"/>
+                    <telerik:RadButton Content="Convert Test" DockPanel.Dock="Right" Width="75" Margin="2" Command="{Binding ConvertToPdfCommand}"/>
+                </DockPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <!--<views:FixturesView DataContext="{Binding FixturesVM}" />-->
+                </Grid>
+            </DockPanel>
+        </telerik:RadBusyIndicator>
+
+    </Grid>
+</telerik:RadWindow>
