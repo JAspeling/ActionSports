@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Leagues - {{venue.title}}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <button ion-item *ngFor="let league of leagues">
+                <ion-icon name="tennisball" item-start></ion-icon>
+                {{league.title}}
+            </button>
+        </ion-item>
+    </ion-list>
+</ion-content>

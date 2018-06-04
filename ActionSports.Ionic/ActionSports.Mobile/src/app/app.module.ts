@@ -8,11 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { VenuePage } from '../pages/venues/venue';
+import { VenuesService } from '../services/venuesService';
+import { LeaguePage } from '../pages/leagues/leagues';
+import { LeaguesService } from '../services/leaguesService';
 
 @NgModule({
   declarations: [
     MyApp,
-    VenuePage
+    VenuePage,
+    LeaguePage
   ],
   imports: [
     BrowserModule,
@@ -22,11 +26,14 @@ import { VenuePage } from '../pages/venues/venue';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    VenuePage
+    VenuePage,
+    LeaguePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    VenuesService,
+    LeaguesService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,9 +1,8 @@
-import { VenueModel } from './../../classes/VenueModel';
 import { Component } from '@angular/core';
-import { NavController, LoadingController, Loading } from 'ionic-angular';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-
+import { LeaguePage } from '../leagues/leagues';
+import { Loading, LoadingController, NavController } from 'ionic-angular';
+import { VenueModel } from './../../classes/VenueModel';
+import { VenuesService } from '../../services/venuesService';
 
 @Component({
     selector: 'page-venue',
@@ -16,21 +15,18 @@ export class VenuePage {
 
     constructor(public navCtrl: NavController,
         public loadingCtrl: LoadingController,
-        private httpClient: HttpClient) {
+        private venuesService: VenuesService
+    ) {
         this.createLoading();
 
-        this.loader.present();
-        this.httpClient.get<VenueModel[]>("http://localhost:5000/api/venues").subscribe((data: VenueModel[]) => {
-            data.forEach(venue => {
-                this.venues.push(venue);
+        this.loader.present().then(() => {
+            this.venuesService.getVenues().then((venues: VenueModel[]) => {
+                venues.forEach(venue => {
+                    this.venues.push(venue);
+                });
+                this.loader.dismiss();
             });
-            this.loader.dismiss();
         });
-    }
-
-    private getVenues(): Promise<VenueModel[]> {
-
-        return this.httpClient.get<VenueModel[]>("http://localhost:5000/api/venues").toPromise();
     }
 
     createLoading() {
@@ -41,6 +37,9 @@ export class VenuePage {
     }
 
     navigateToVenue(venue: VenueModel) {
-        debugger;
+        var navOptions = {
+            animation: 'wd-transition'
+       };
+        this.navCtrl.push(LeaguePage, { venue: venue }, navOptions);
     }
 }

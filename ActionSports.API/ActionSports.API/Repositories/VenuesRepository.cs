@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace ActionSports.API.Repositories {
     public class VenuesRepository : IVenuesRepository {
-
-
         public List<VenueModel> GetVenues() {
             Task<IDocument> task = BrowsingContext.New(AppState.config).OpenAsync($"{AppState.baseURL}/External/Fixtures/");
             task.Wait();

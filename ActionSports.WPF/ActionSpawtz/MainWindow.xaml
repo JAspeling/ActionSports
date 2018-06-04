@@ -6,9 +6,11 @@
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:converters="clr-namespace:ActionSpawtz.Tools.Converters"
         xmlns:local="clr-namespace:ActionSpawtz" Loaded="RadWindow_Loaded"
+        xmlns:viewmodels="clr-namespace:ActionSpawtz.ViewModels"
         xmlns:views="clr-namespace:ActionSpawtz.Views"
         mc:Ignorable="d"
-        Header="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+        Header="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen"
+                   d:DataContext="{d:DesignInstance Type=viewmodels:MainVM, IsDesignTimeCreatable=True}">
     <telerik:RadWindow.Resources>
         <ResourceDictionary>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

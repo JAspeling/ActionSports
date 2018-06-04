@@ -36,6 +36,7 @@ namespace ActionSports.API {
             services.AddMvc();
 
             services.AddTransient<IVenuesRepository, VenuesRepository>();
+            services.AddTransient<ILeaguesRepository, LeaguesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
