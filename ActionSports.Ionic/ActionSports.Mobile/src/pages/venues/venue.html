@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Actionsports Venues
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content >
+    <ion-list>
+        <ion-item>
+            <button (click)="navigateToVenue(venue)" ion-item *ngFor="let venue of venues">
+                <ion-icon name="tennisball" item-start></ion-icon>
+                {{venue.title}}
+            </button>
+        </ion-item>
+    </ion-list>
+</ion-content>

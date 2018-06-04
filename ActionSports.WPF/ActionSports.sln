@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionSports.WPF", "ActionSpawtz\ActionSports.WPF.csproj", "{12AA5700-A409-44B1-BF30-588FD1F3847D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12AA5700-A409-44B1-BF30-588FD1F3847D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12AA5700-A409-44B1-BF30-588FD1F3847D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12AA5700-A409-44B1-BF30-588FD1F3847D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12AA5700-A409-44B1-BF30-588FD1F3847D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F43FD3E0-2A1F-4B42-877E-5B2A1454A8C8}
+	EndGlobalSection
+EndGlobal
