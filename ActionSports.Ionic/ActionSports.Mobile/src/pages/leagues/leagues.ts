@@ -3,7 +3,6 @@ import { LeagueModel } from './../../classes/LeagueModel';
 import { LeaguesService } from './../../services/leaguesService';
 import { Loading, LoadingController, NavParams } from 'ionic-angular';
 import { VenueModel } from '../../classes/VenueModel';
-import { VenuePage } from './../venues/venue';
 
 @Component({
     selector: 'page-league',
@@ -19,12 +18,10 @@ export class LeaguePage {
         public loadingCtrl: LoadingController,
         public leagueService: LeaguesService
     ) {
-        debugger;
         this.venue = this.navParams.data.venue;
     }
 
     ionViewDidLoad(): void {
-        debugger;
         this.createLoading();
         this.leagues = [];
         this.loader.present().then(() => {
@@ -32,6 +29,8 @@ export class LeaguePage {
                 .getLeagues(this.venue)
                 .then((leagues: LeagueModel[]) => {
                     leagues.forEach(league => {
+                        if (league.title.length > 55)
+                            league.title = "..." + league.title.substring(league.title.length - 55,league.title.length)
                         this.leagues.push(league);
                     });
                     this.loader.dismiss();

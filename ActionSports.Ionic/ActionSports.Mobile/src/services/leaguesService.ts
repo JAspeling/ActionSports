@@ -10,6 +10,6 @@ export class LeaguesService {
     }
 
     public getLeagues(venue: VenueModel) : Promise<LeagueModel[]> {
-        return this.httpClient.post<LeagueModel[]>("http://localhost:5000/api/league", venue).toPromise();
+        return this.httpClient.post<LeagueModel[]>(`http://www.action.jaspeling.co.za/ActionSports.API/api/league`, venue).toPromise();
     }
 }

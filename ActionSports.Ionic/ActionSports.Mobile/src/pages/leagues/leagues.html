@@ -6,12 +6,28 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-list>
-        <ion-item>
-            <button ion-item *ngFor="let league of leagues">
-                <ion-icon name="tennisball" item-start></ion-icon>
-                {{league.title}}
+    <ion-list no-lines>
+        <!-- <ion-item *ngFor="let league of leagues">
+            <button ion-item>
+                    <h3>{{league.title}}</h3>
             </button>
-        </ion-item>
+            <button ion-button small item-end color="secondary">Fixtures</button>
+            <button ion-button small item-end color="secondary">Standings</button>
+        </ion-item> -->
+        <ion-item-sliding *ngFor="let league of leagues">
+            <ion-item>
+                    <h3>{{league.title}}</h3>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="primary">
+                    <ion-icon name="text"></ion-icon>
+                    Fixtures
+                </button>
+                <button ion-button color="secondary">
+                    <ion-icon name="call"></ion-icon>
+                    Standings
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
     </ion-list>
 </ion-content>
