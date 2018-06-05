@@ -23,8 +23,15 @@ namespace ActionSports.API.Controllers {
         // POST: api/League
         [HttpPost]
         public IEnumerable<LeagueModel> Post([FromBody]VenueModel venue) {
-            var leagues = LeaguesRepository.GetLeagues(venue);
-            return leagues;
+            try {
+                Logger.LogDebug($"Getting Venues for {venue.Title}");
+                var leagues = LeaguesRepository.GetLeagues(venue);
+                return leagues;
+            }
+            catch (Exception ex) {
+                ex.CustomLog(Logger, $"Failed to retrieve Lagues for Venue");
+                return null;
+            }
         }
     }
 }

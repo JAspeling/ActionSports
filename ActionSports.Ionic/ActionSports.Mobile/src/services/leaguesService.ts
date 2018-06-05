@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { LeagueModel } from "../classes/LeagueModel";
-import { VenueModel } from "../classes";
+import { VenueModel } from "../classes/VenueModel";
 
 @Injectable()
 export class LeaguesService {
@@ -10,6 +10,6 @@ export class LeaguesService {
     }
 
     public getLeagues(venue: VenueModel) : Promise<LeagueModel[]> {
-        return this.httpClient.post<LeagueModel[]>(`http://www.action.jaspeling.co.za/ActionSports.API/api/league`, venue).toPromise();
+        return this.httpClient.post<LeagueModel[]>(`http://localhost:5000/api/league`, venue).toPromise();
     }
 }

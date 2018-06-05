@@ -11,12 +11,17 @@ import { VenuePage } from '../pages/venues/venue';
 import { VenuesService } from '../services/venuesService';
 import { LeaguePage } from '../pages/leagues/leagues';
 import { LeaguesService } from '../services/leaguesService';
+import { StandingsService } from '../services/standingsService';
+import { StandingsPage } from '../pages/standings/standings';
+import { ExpandableComponent } from '../components/expandable';
 
 @NgModule({
   declarations: [
     MyApp,
     VenuePage,
-    LeaguePage
+    LeaguePage,
+    StandingsPage,
+    ExpandableComponent
   ],
   imports: [
     BrowserModule,
@@ -27,13 +32,15 @@ import { LeaguesService } from '../services/leaguesService';
   entryComponents: [
     MyApp,
     VenuePage,
-    LeaguePage
+    LeaguePage,
+    StandingsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     VenuesService,
     LeaguesService,
+    StandingsService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

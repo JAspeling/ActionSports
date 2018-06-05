@@ -7,15 +7,8 @@
 </ion-header>
 <ion-content>
     <ion-list no-lines>
-        <!-- <ion-item *ngFor="let league of leagues">
-            <button ion-item>
-                    <h3>{{league.title}}</h3>
-            </button>
-            <button ion-button small item-end color="secondary">Fixtures</button>
-            <button ion-button small item-end color="secondary">Standings</button>
-        </ion-item> -->
-        <ion-item-sliding *ngFor="let league of leagues">
-            <ion-item>
+        <ion-item-sliding #sliding *ngFor="let league of leagues">
+            <ion-item #item (click)="toggleState(sliding, item)">
                     <h3>{{league.title}}</h3>
             </ion-item>
             <ion-item-options side="right">
@@ -23,7 +16,7 @@
                     <ion-icon name="text"></ion-icon>
                     Fixtures
                 </button>
-                <button ion-button color="secondary">
+                <button (click)="navigateToStandings(league)" ion-button color="secondary">
                     <ion-icon name="call"></ion-icon>
                     Standings
                 </button>

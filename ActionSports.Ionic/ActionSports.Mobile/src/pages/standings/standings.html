@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Standings - {{league.title}}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item detail-none (click)="expandItem(standing)" ion-item *ngFor="let standing of standings">
+            <h2>{{standing.date}}</h2>
+            <p>{{standings?.length}} standing{{(standings?.length == 1 ? '' : 's')}}, {{standing.matches?.length}} match{{(standing.matches?.length
+                == 1 ? '' : 'es')}}</p>
+            <expandable [expanded]="standing.isExpanded">
+                <ion-list no-lines>
+                    <ion-item *ngFor="let match of standing.matches">
+                        <ion-item>
+                                <h2>{{match.teamA}} vs {{match.teamB}}</h2>
+                                <p>{{match.score}}</p>
+                        </ion-item>
+                        <button (click)="showScoresheet($event)" ion-button item-end outline small>View</button>
+                    </ion-item>
+                </ion-list>
+            </expandable>
+        </ion-item>
+    </ion-list>
+
+
+
+    <!-- <ion-list no-lines >
+        <ion-item *ngIf="standings">
+            <button ion-item *ngFor="let standing of standings">
+                {{standing.date}}
+            </button>
+        </ion-item>
+    </ion-list> -->
+</ion-content>

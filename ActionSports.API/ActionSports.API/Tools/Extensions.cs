@@ -18,5 +18,9 @@ namespace ActionSports.API {
         public static void Purify(ref string input) {
             input = input.Trim().Replace("\n", "").Replace("\t", "").Trim();
         }
+
+        public static string Purify( string input) {
+            return input.Trim().Replace("\n", "").Replace("\t", "").Trim();
+        }
     }
 }
