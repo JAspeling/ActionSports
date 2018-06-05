@@ -53,11 +53,11 @@ export class LeaguePage extends BasePage {
     }
 
     toggleState(slidingItem: ItemSliding, item: Item) {
-        if (this.isOpen) {
-            this.close(slidingItem)
-        } else {
-            this.open(slidingItem, item);
-        }
+        // if (this.isOpen) {
+        //     this.close(slidingItem)
+        // } else {
+        //     this.open(slidingItem, item);
+        // }
     }
 
     open(itemSlide: ItemSliding, item: Item) {

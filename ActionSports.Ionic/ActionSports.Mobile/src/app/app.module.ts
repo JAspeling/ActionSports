@@ -14,6 +14,7 @@ import { LeaguesService } from '../services/leaguesService';
 import { StandingsService } from '../services/standingsService';
 import { StandingsPage } from '../pages/standings/standings';
 import { ExpandableComponent } from '../components/expandable';
+import { ScoresheetPage } from '../pages/scoresheet/scoresheet';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ExpandableComponent } from '../components/expandable';
     VenuePage,
     LeaguePage,
     StandingsPage,
+    ScoresheetPage,
     ExpandableComponent
   ],
   imports: [
@@ -33,7 +35,8 @@ import { ExpandableComponent } from '../components/expandable';
     MyApp,
     VenuePage,
     LeaguePage,
-    StandingsPage
+    StandingsPage,
+    ScoresheetPage
   ],
   providers: [
     StatusBar,
