@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{league.title}}
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-tabs #tabs selectedIndex="0" >
+        <ion-tab tabTitle="Standings" [root]="standingsPage"></ion-tab>
+        <ion-tab tabTitle="Fixtures" [root]="standingsPage"></ion-tab>
+    </ion-tabs>
+</ion-content>

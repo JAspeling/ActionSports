@@ -1,3 +1,4 @@
+import { LeagueInformationPage } from './../league-information/league-information-page';
 import { BasePage } from './../base-page';
 import { Component } from '@angular/core';
 import {
@@ -5,11 +6,11 @@ import {
     ItemSliding,
     LoadingController,
     NavController,
-    NavParams
+    NavParams,
+    ToastController
     } from 'ionic-angular';
 import { LeagueModel } from './../../classes/LeagueModel';
 import { LeaguesService } from './../../services/leaguesService';
-import { StandingsPage } from '../standings/standings';
 import { VenueModel } from '../../classes/VenueModel';
 
 @Component({
@@ -25,14 +26,16 @@ export class LeaguePage extends BasePage {
         public navParams: NavParams,
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
-        public leagueService: LeaguesService
+        public leagueService: LeaguesService,
+        public toastCtrl: ToastController
     ) {
-        super(loadingCtrl, navParams, navCtrl)
+        super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.venue = this.navParams.data.venue;
         this.createLoading(`Retrieving Leagues for ${this.venue.title}...`);
     }
 
     ionViewDidLoad(): void {
+        debugger;
         this.leagues = [];
         this.loader.present().then(() => {
             this.leagueService
@@ -44,12 +47,15 @@ export class LeaguePage extends BasePage {
                         this.leagues.push(league);
                     });
                     this.loader.dismiss();
+                }, err => {
+                    this.loader.dismiss();
+                    this.presentToast('Failed to retrieve leagues');
                 });
         });
     }
 
     navigateToStandings(league: LeagueModel) {
-        this.navCtrl.push(StandingsPage, { league: league }, this.navOptions);
+        this.navCtrl.push(LeagueInformationPage, { league: league }, this.navOptions);
     }
 
     toggleState(slidingItem: ItemSliding, item: Item) {

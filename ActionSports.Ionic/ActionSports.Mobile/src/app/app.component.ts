@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Storage } from '@ionic/storage';
 
 @Component({  
   templateUrl: 'app.html'
@@ -10,13 +11,27 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class MyApp {
   rootPage:any = VenuePage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage) {
+
+    // storage.set('api', 'http://action.jaspeling.co.za/ActionSports.API');
+    // storage.set('test', 'http://action.jaspeling.co.za/ActionSports.API');
+    
+
+    storage.forEach((value, key, index) => {
+      console.log(`${key} - ${value}`);
+    }).then(() => {
+      storage.get('api').then((val) => {
+      
+        console.log('Using api', val);
+        platform.ready().then(() => {
+          // Okay, so the platform is ready and our plugins are available.
+          // Here you can do any higher level native things you might need.
+          statusBar.styleDefault();
+          splashScreen.hide();
+        });
+      });
     });
+    
   }
 }
 

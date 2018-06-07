@@ -17,7 +17,7 @@ namespace ActionSports.API.Controllers {
         public IStandingsRepository StandingsRepository { get; }
 
         public StandingsController(IStandingsRepository standingsRepository, ILoggerFactory factory) {
-            Logger = factory.CreateLogger<StandingsController>();
+            Logger = factory.CreateLogger("StandingsController");
             StandingsRepository = standingsRepository;
         }
 
@@ -29,11 +29,11 @@ namespace ActionSports.API.Controllers {
                 var standings = StandingsRepository.GetStandings(league);
 
                 return standings;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 ex.CustomLog(Logger, "Failed to retrieve Standings from league");
                 return null;
             }
-
         }
     }
 }

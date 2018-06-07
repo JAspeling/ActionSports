@@ -1,7 +1,7 @@
 import { BasePage } from './../base-page';
 import { Component } from '@angular/core';
 import { LeagueModel } from './../../classes/LeagueModel';
-import { LoadingController, NavParams, NavController } from 'ionic-angular';
+import { LoadingController, NavParams, NavController, ToastController } from 'ionic-angular';
 import { StandingModel } from '../../classes/StandingModel';
 import { StandingsService } from '../../services/standingsService';
 import { ScoresheetPage } from '../scoresheet/scoresheet';
@@ -19,9 +19,10 @@ export class StandingsPage extends BasePage {
         public loadingCtrl: LoadingController,
         public navParams: NavParams,
         public standingsService: StandingsService,
-        public navCtrl : NavController
+        public navCtrl: NavController,
+        public toastCtrl: ToastController
     ) {
-        super(loadingCtrl, navParams, navCtrl);
+        super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.createLoading('Retrieving Standings...');
 
         this.league = this.navParams.data.league;
@@ -39,6 +40,9 @@ export class StandingsPage extends BasePage {
                         });
                     }
                     this.loader.dismiss();
+                }, err => {
+                    this.loader.dismiss();
+                    this.presentToast('Failed to retrieve standings');
                 });
         });
     }
@@ -54,10 +58,10 @@ export class StandingsPage extends BasePage {
         });
     }
 
-    showScoresheet(event : Event, match: MatchModel) {
+    showScoresheet(event: Event, match: MatchModel) {
         debugger;
         event.stopPropagation();
-        
-        this.navCtrl.push(ScoresheetPage, {match: match}, this.navOptions);
+
+        this.navCtrl.push(ScoresheetPage, { match: match }, this.navOptions);
     }
 }

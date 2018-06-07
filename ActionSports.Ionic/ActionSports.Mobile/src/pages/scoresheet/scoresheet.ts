@@ -1,4 +1,4 @@
-import { LoadingController, NavParams, NavController } from 'ionic-angular';
+import { LoadingController, NavParams, NavController, ToastController } from 'ionic-angular';
 import { BasePage } from './../base-page';
 import { Component } from '@angular/core';
 import { MatchModel } from '../../classes/MatchModel';
@@ -16,9 +16,10 @@ export class ScoresheetPage extends BasePage {
         public loadingController: LoadingController,
         public navParams: NavParams,
         public navController: NavController,
-        public sanitizer: DomSanitizer
+        public sanitizer: DomSanitizer,
+        public toastCtrl: ToastController
     ) {
-        super(loadingController, navParams, navController);
+        super(loadingController, navParams, navController, toastCtrl);
         this.createLoading('Fetching scoresheet...');
         this.match = this.navParams.data.match;
         this.scoresheetUrl = this.sanitizer.bypassSecurityTrustResourceUrl('http://actionsport.spawtz.com' + this.match.scoreHref);

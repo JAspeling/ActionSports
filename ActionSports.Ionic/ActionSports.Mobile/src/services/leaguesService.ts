@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { LeagueModel } from "../classes/LeagueModel";
-import { VenueModel } from "../classes/VenueModel";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { LeagueModel } from '../classes/LeagueModel';
+import { VenueModel } from '../classes/VenueModel';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/timeout';
 
 @Injectable()
 export class LeaguesService {
-    constructor(private httpClient: HttpClient) {
-
-    }
-
-    public getLeagues(venue: VenueModel) : Promise<LeagueModel[]> {
-        return this.httpClient.post<LeagueModel[]>(`http://localhost:5000/api/league`, venue).toPromise();
+    constructor(private httpClient: HttpClient) {}
+    // http://localhost:5000/api/league
+    public getLeagues(venue: VenueModel): Promise<LeagueModel[]> {
+        return this.httpClient.post<LeagueModel[]>(`http://action.jaspeling.co.za/ActionSports.API/api/league`, venue).timeout(15000).toPromise();
     }
 }

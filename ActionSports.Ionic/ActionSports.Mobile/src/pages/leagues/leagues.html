@@ -3,13 +3,19 @@
         <ion-title>
             Leagues - {{venue.title}}
         </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
+
 <ion-content>
     <ion-list no-lines>
         <ion-item-sliding #sliding *ngFor="let league of leagues">
             <ion-item #item (click)="toggleState(sliding, item)">
-                    <h3>{{league.title}}</h3>
+                <h3>{{league.title}}</h3>
             </ion-item>
             <ion-item-options side="right">
                 <button ion-button color="primary">
