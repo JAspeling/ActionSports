@@ -9,6 +9,6 @@ export class StandingsService {
 
     }
     getStandings(league: LeagueModel): Promise<StandingModel[]> {
-        return this.httpClient.post<StandingModel[]>(`http://localhost:5000/api/standings`, league).toPromise();
+        return this.httpClient.post<StandingModel[]>(`http://jaspeling.grifdev.co.za/api/standings`, league).toPromise();
     } 
 }

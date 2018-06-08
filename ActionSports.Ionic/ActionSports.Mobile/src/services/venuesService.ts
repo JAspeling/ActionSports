@@ -9,6 +9,6 @@ export class VenuesService {
     }
 
     public getVenues() : Promise<VenueModel[]> {
-        return this.httpClient.get<VenueModel[]>(`http://localhost:5000/api/venues`).toPromise();
+        return this.httpClient.get<VenueModel[]>(`http://jaspeling.grifdev.co.za/api/venues`).toPromise();
     }
 }
