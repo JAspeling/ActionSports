@@ -13,7 +13,7 @@
 
 <ion-content>
     <ion-tabs #tabs selectedIndex="0" >
-        <ion-tab tabTitle="Standings" [root]="standingsPage"></ion-tab>
-        <ion-tab tabTitle="Fixtures" [root]="standingsPage"></ion-tab>
+        <ion-tab tabTitle="Standings" [root]="standingsPage" [rootParams]="league"></ion-tab>
+        <ion-tab tabTitle="Fixtures" [root]="fixturePage" [rootParams]="league"></ion-tab>
     </ion-tabs>
 </ion-content>

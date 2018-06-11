@@ -1,3 +1,4 @@
+import { FixturePage } from './../pages/fixtures/fixture-page';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { ExpandableComponent } from '../components/expandable';
@@ -27,7 +28,8 @@ import { LeagueInformationPage } from '../pages/league-information/league-inform
     StandingsPage,
     ScoresheetPage,
     ExpandableComponent,
-    LeagueInformationPage
+    LeagueInformationPage,
+    FixturePage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import { LeagueInformationPage } from '../pages/league-information/league-inform
     LeaguePage,
     StandingsPage,
     ScoresheetPage,
-    LeagueInformationPage
+    LeagueInformationPage,
+    FixturePage
   ],
   providers: [
     StatusBar,

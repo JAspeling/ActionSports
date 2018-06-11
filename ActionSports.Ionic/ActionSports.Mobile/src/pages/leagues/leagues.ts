@@ -35,7 +35,6 @@ export class LeaguePage extends BasePage {
     }
 
     ionViewDidLoad(): void {
-        debugger;
         this.leagues = [];
         this.loader.present().then(() => {
             this.leagueService
@@ -46,8 +45,8 @@ export class LeaguePage extends BasePage {
                             league.title = "..." + league.title.substring(league.title.length - 55,league.title.length)
                         this.leagues.push(league);
                     });
-                    this.loader.dismiss();
                 }, err => {
+                    console.error('Failed to retrieve leagues', err);
                     this.loader.dismiss();
                     this.presentToast('Failed to retrieve leagues');
                 });
@@ -66,20 +65,20 @@ export class LeaguePage extends BasePage {
         // }
     }
 
-    open(itemSlide: ItemSliding, item: Item) {
+    // open(itemSlide: ItemSliding, item: Item) {
 
-        // reproduce the slide on the click
-        itemSlide.setElementClass("active-sliding", true);
-        itemSlide.setElementClass("active-slide", true);
-        itemSlide.setElementClass("active-options-right", true);
-        item.setElementStyle("transform", "translate3d(-144px, 0px, 0px)")
+    //     // reproduce the slide on the click
+    //     itemSlide.setElementClass("active-sliding", true);
+    //     itemSlide.setElementClass("active-slide", true);
+    //     itemSlide.setElementClass("active-options-right", true);
+    //     item.setElementStyle("transform", "translate3d(-144px, 0px, 0px)")
 
-    }
+    // }
 
-    close(slidingItem: ItemSliding) {
-        slidingItem.close();
-        slidingItem.setElementClass("active-slide", false);
-        slidingItem.setElementClass("active-slide", false);
-        slidingItem.setElementClass("active-options-right", false);
-    }
+    // close(slidingItem: ItemSliding) {
+    //     slidingItem.close();
+    //     slidingItem.setElementClass("active-slide", false);
+    //     slidingItem.setElementClass("active-slide", false);
+    //     slidingItem.setElementClass("active-options-right", false);
+    // }
 }

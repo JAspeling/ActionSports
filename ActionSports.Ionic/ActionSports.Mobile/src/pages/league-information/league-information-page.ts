@@ -1,3 +1,4 @@
+import { FixturePage } from './../fixtures/fixture-page';
 import { Component, ViewChild } from '@angular/core';
 import { LeagueModel } from '../../classes/LeagueModel';
 import { BasePage } from '../base-page';
@@ -13,6 +14,7 @@ export class LeagueInformationPage extends BasePage {
     league: LeagueModel;
     @ViewChild('tabs') tabRef: Tabs;
     standingsPage = StandingsPage;
+    fixturePage = FixturePage;
 
     constructor(
         public loadingCtrl: LoadingController,
@@ -24,5 +26,6 @@ export class LeagueInformationPage extends BasePage {
         super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.createLoading('Retrieving Standings...');
         this.league = this.navParams.data.league;
+        console.log('League', this.league);
     }
 }

@@ -25,26 +25,31 @@ export class StandingsPage extends BasePage {
         super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.createLoading('Retrieving Standings...');
 
-        this.league = this.navParams.data.league;
+        this.league = this.navParams.data;
+        if (!this.league) console.warn('No league passed from the venues page.')
     }
 
     ionViewDidLoad(): void {
         this.standings = [];
-        this.loader.present().then(() => {
-            this.standingsService
-                .getStandings(this.league)
-                .then((standings: StandingModel[]) => {
-                    if (standings) {
-                        standings.forEach(standing => {
-                            this.standings.push(standing);
-                        });
-                    }
-                    this.loader.dismiss();
-                }, err => {
-                    this.loader.dismiss();
-                    this.presentToast('Failed to retrieve standings');
-                });
-        });
+        if (this.league) {
+            this.loader.present().then(() => {
+                this.standingsService
+                    .getStandings(this.league)
+                    .then((standings: StandingModel[]) => {
+                        if (standings) {
+    
+                            standings.forEach(standing => {
+                                this.standings.push(standing);
+                            });
+                        }
+                        // this.loader.dismiss();
+                    }, err => {
+                        console.error('Failed to retrieve standings', err);
+                        this.loader.dismiss();
+                        this.presentToast('Failed to retrieve standings');
+                    });
+            });
+        }
     }
 
     expandItem(standing) {
@@ -59,7 +64,6 @@ export class StandingsPage extends BasePage {
     }
 
     showScoresheet(event: Event, match: MatchModel) {
-        debugger;
         event.stopPropagation();
 
         this.navCtrl.push(ScoresheetPage, { match: match }, this.navOptions);
