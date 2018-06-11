@@ -38,6 +38,7 @@ namespace ActionSports.API {
             services.AddScoped<IVenuesRepository, VenuesRepository>();
             services.AddScoped<ILeaguesRepository, LeaguesRepository>();
             services.AddScoped<IStandingsRepository, StandingsRepository>();
+            services.AddScoped<IScoresheetRepository, ScoresheetRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

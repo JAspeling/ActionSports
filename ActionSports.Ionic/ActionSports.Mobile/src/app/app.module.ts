@@ -17,7 +17,9 @@ import { VenuePage } from '../pages/venues/venue';
 import { VenuesService } from '../services/venuesService';
 import { MainMenuComponent } from '../components/main-menu/main-menu';
 import { LeagueInformationPage } from '../pages/league-information/league-information-page';
-
+import { ScoresheetService } from '../services/scoresheetService';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,9 @@ import { LeagueInformationPage } from '../pages/league-information/league-inform
     VenuesService,
     LeaguesService,
     StandingsService,
+    ScoresheetService,
+    SocialSharing,
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

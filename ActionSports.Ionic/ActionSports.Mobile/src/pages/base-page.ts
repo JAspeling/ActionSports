@@ -7,6 +7,7 @@ import {
 } from 'ionic-angular';
 
 export class BasePage {
+    activeMenu: string;
     loader: Loading;
     navOptions: {
         animation: string;
@@ -32,7 +33,8 @@ export class BasePage {
         let toast = this.toastCtrl.create({
           message: message,
           showCloseButton: true,
-          closeButtonText: 'Ok'
+          closeButtonText: 'Ok',
+          dismissOnPageChange: true
         });
         toast.present();
     }

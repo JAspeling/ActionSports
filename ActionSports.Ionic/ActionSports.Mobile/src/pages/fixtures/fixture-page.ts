@@ -13,5 +13,6 @@ export class FixturePage extends BasePage {
         public navCtrl: NavController,
         public toastCtrl: ToastController) {
         super(loadingCtrl, navParams, navCtrl, toastCtrl);
+        console.log('Fixture page loaded with', navParams.data);
     }
 }

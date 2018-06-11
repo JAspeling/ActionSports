@@ -42,7 +42,7 @@ export class StandingsPage extends BasePage {
                                 this.standings.push(standing);
                             });
                         }
-                        // this.loader.dismiss();
+                        this.loader.dismiss();
                     }, err => {
                         console.error('Failed to retrieve standings', err);
                         this.loader.dismiss();
