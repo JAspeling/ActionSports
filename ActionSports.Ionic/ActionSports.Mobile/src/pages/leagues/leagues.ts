@@ -1,6 +1,6 @@
 import { LeagueInformationPage } from './../league-information/league-information-page';
 import { BasePage } from './../base-page';
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {
     Item,
     ItemSliding,
@@ -8,7 +8,7 @@ import {
     NavController,
     NavParams,
     ToastController
-    } from 'ionic-angular';
+} from 'ionic-angular';
 import { LeagueModel } from './../../classes/LeagueModel';
 import { LeaguesService } from './../../services/leaguesService';
 import { VenueModel } from '../../classes/VenueModel';
@@ -20,41 +20,57 @@ import { VenueModel } from '../../classes/VenueModel';
 export class LeaguePage extends BasePage {
     venue: VenueModel;
     leagues: LeagueModel[] = [];
-    isOpen: boolean = false;    
+    isOpen: boolean = false;
 
     constructor(
         public navParams: NavParams,
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
         public leagueService: LeaguesService,
-        public toastCtrl: ToastController
+        public toastCtrl: ToastController,
+        private zone: NgZone
     ) {
         super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.venue = this.navParams.data.venue;
-        this.createLoading(`Retrieving Leagues for ${this.venue.title}...`);
     }
 
-    ionViewDidLoad(): void {
+    ionViewDidEnter(){
         this.leagues = [];
+        this.createLoading(`Retrieving Leagues for ${this.venue.title}...`);
         this.loader.present().then(() => {
-            this.leagueService
-                .getLeagues(this.venue)
-                .then((leagues: LeagueModel[]) => {
+            this.leagueService.getLeagues(this.venue).then(
+                (leagues: LeagueModel[]) => {
+                    // add the retrieved values to the cache if it hasnt been cached yet.
+                    this.leagueService.addToCache(this.venue, leagues);
+                    console.log('Data retrieved.');
+                    this.logDate();
                     leagues.forEach(league => {
-                        if (league.title.length > 55)
-                            league.title = "..." + league.title.substring(league.title.length - 55,league.title.length)
                         this.leagues.push(league);
                     });
-                }, err => {
+                    console.log('Dismissing loader');
+                    this.logDate();
+                    this.loader.dismiss();
+                },
+                err => {
                     console.error('Failed to retrieve leagues', err);
                     this.loader.dismiss();
                     this.presentToast('Failed to retrieve leagues');
-                });
+                }
+            );
         });
     }
 
     navigateToStandings(league: LeagueModel) {
-        this.navCtrl.push(LeagueInformationPage, { league: league }, this.navOptions);
+        this.navCtrl.push(
+            LeagueInformationPage,
+            { league: league },
+            this.navOptions
+        );
+    }
+
+    logDate() {
+        const d = new Date();
+        console.log(`Time: ${d.getTime()}`);
     }
 
     toggleState(slidingItem: ItemSliding, item: Item) {

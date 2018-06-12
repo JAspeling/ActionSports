@@ -4,7 +4,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { FabContainer, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { MatchModel } from '../../classes/MatchModel';
-import { ScoresheetService } from './../../services/scoresheetService';
+import { ScoresheetService, MessageObject } from './../../services/scoresheetService';
 import { BasePage } from './../base-page';
 
 @Component({
@@ -25,69 +25,30 @@ export class ScoresheetPage extends BasePage {
         private scoresheetService: ScoresheetService
     ) {
         super(loadingController, navParams, navController, toastCtrl);
-        this.createLoading('Fetching scoresheet...');
         this.match = this.navParams.data.match;
         this.scoresheetUrl = this.sanitizer.bypassSecurityTrustResourceUrl('http://actionsport.spawtz.com' + this.match.scoreHref);
     }
-
-    b64toBlob(b64Data, contentType, sliceSize) {
-        contentType = contentType || '';
-        sliceSize = sliceSize || 512;
-      
-        var byteCharacters = atob(b64Data);
-        var byteArrays = [];
-      
-        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          var slice = byteCharacters.slice(offset, offset + sliceSize);
-      
-          var byteNumbers = new Array(slice.length);
-          for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-          }
-      
-          var byteArray = new Uint8Array(byteNumbers);
-      
-          byteArrays.push(byteArray);
-        }
-      
-        var blob = new Blob(byteArrays, {type: contentType});
-        return blob;
-      }
     
     openSocial(network: string, fab: FabContainer) {
-        console.log('Share in ' + network); 
-        const message = `${this.match.teamA} vs ${this.match.teamB} - ${this.match.score}`;
-        const url = 'http://actionsport.spawtz.com' + this.match.scoreHref;
-
-
-        
-        
-        this.scoresheetService.convertToPdf2(this.match);//.then((base64) => {
-
-        //     var blob = this.b64toBlob(base64, 'application/pdf', 512);
-        //     var blobUrl = URL.createObjectURL(blob);
-            
-        //     const fileUrl = `data:application/pdf;base64,${base64}`;
-        //     this.socialSharing.shareViaWhatsApp(`${this.match.teamA} vs ${this.match.teamB} - ${this.match.score}`, blobUrl, 'http://actionsport.spawtz.com' + this.match.scoreHref);
-        //     fab.close();
-        // }, err => {
-        //     console.log('Failed to retrieve PDF from the server.', err);
-        //     fab.close();
-        // });
-
-        // this.socialSharing.canShareVia('whatsapp', message, null, null, url).then(() => { 
-            
-        //     this.scoresheetService.convertToPdf(this.match).then((base64) => {
-        //         //this.socialSharing.shareViaWhatsApp(`${this.match.teamA} vs ${this.match.teamB} - ${this.match.score}`, '', 'http://actionsport.spawtz.com' + this.match.scoreHref);
-        //         fab.close();
-        //     }, err => {
-        //         console.log('Failed to retrieve PDF from the server.', err);
-        //         fab.close();
-        //     });
-
-
-        // }, err => {
-        //     this.presentToast('Whatsapp not installed on device!');
-        // });
+        this.createLoading('Converting scoresheet to PDF...');
+        this.loader.present().then(() => {
+            this.scoresheetService.convertToPdf(this.match).then((base64) => {
+                this.scoresheetService.addToCache(this.match.score, base64);
+                this.scoresheetService.saveBase64(base64, `${this.match.teamA} vs ${this.match.teamB} - ${this.match.score}`, this.match)
+                    .then((messageObject: MessageObject) => {
+                            this.socialSharing.shareViaWhatsApp(messageObject.message, messageObject.fileUrl).then(() => {
+                            this.loader.dismiss();
+                        }).catch(err => {
+                            this.presentToast('Failed to send file via whatsapp');
+                        });
+                    }, err => {
+                        this.presentToast('Failed to save file to Device');
+                        this.loader.dismiss();
+                    });
+            }, err => {
+                this.loader.dismiss();
+                this.presentToast('Failed to convert file to PDF');
+            });
+        })
       }
 }

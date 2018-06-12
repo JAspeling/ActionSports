@@ -16,9 +16,9 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage) {
 
     // storage.set('api', 'http://action.jaspeling.co.za/ActionSports.API');
-    // AppState.basePage = 'http://action.jaspeling.co.za/ActionSports.API/api'
+    AppState.basePage = 'http://action.jaspeling.co.za/ActionSports.API/api'
     // AppState.basePage = 'http://localhost:5000/api'
-    AppState.basePage = 'http://jaspeling.grifdev.co.za/api/';
+    // AppState.basePage = 'http://jaspeling.grifdev.co.za/api/';
 
     storage.forEach((value, key, index) => {
       console.log(`${key} - ${value}`);

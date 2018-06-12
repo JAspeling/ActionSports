@@ -30,6 +30,7 @@ export class BasePage {
     }
 
     presentToast(message: string) {
+        console.log(message);
         let toast = this.toastCtrl.create({
           message: message,
           showCloseButton: true,
