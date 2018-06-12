@@ -1,9 +1,10 @@
-import { MatchModel } from './../classes/MatchModel';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppState } from '../classes/AppState';
+import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
+
+import { AppState } from '../classes/AppState';
+import { MatchModel } from './../classes/MatchModel';
 
 @Injectable()
 export class ScoresheetService {

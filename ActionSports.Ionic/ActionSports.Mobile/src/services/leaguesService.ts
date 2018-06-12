@@ -1,10 +1,11 @@
-import { AppState } from './../classes/AppState';
-import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/timeout';
+
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
 import { LeagueModel } from '../classes/LeagueModel';
 import { VenueModel } from '../classes/VenueModel';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/timeout';
+import { AppState } from './../classes/AppState';
 
 @Injectable()
 export class LeaguesService {

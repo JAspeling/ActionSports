@@ -1,11 +1,11 @@
-import { ScoresheetService } from './../../services/scoresheetService';
-import { LoadingController, NavParams, NavController, ToastController, FabContainer } from 'ionic-angular';
-import { BasePage } from './../base-page';
 import { Component } from '@angular/core';
-import { MatchModel } from '../../classes/MatchModel';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { AppState } from '../../classes/AppState';
+import { FabContainer, LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { MatchModel } from '../../classes/MatchModel';
+import { ScoresheetService } from './../../services/scoresheetService';
+import { BasePage } from './../base-page';
 
 @Component({
     selector: 'page-scoresheet',

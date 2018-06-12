@@ -1,9 +1,10 @@
+import { Component } from '@angular/core';
+import { LoadingController, MenuController, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { LeaguePage } from '../leagues/leagues';
+import { VenueModel } from './../../classes/VenueModel';
 import { VenuesService } from './../../services/venuesService';
 import { BasePage } from './../base-page';
-import { Component } from '@angular/core';
-import { LeaguePage } from '../leagues/leagues';
-import { Loading, LoadingController, NavController, NavParams, ToastController, MenuController } from 'ionic-angular';
-import { VenueModel } from './../../classes/VenueModel';
 
 @Component({
     selector: 'page-venue',
