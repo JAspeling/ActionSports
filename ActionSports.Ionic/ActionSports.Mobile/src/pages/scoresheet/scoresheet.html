@@ -9,4 +9,15 @@
 <ion-content>
     <iframe class='webPage' [src]="scoresheetUrl" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
     </iframe>
+
+    <ion-fab left bottom #fab>
+        <button ion-fab color="secondary">
+            <ion-icon name="md-share"></ion-icon>
+        </button>
+        <ion-fab-list side="top">
+            <button ion-fab color="whatsapp" (click)="openSocial('whatsapp', fab)">
+                <ion-icon name="logo-whatsapp"></ion-icon>
+            </button>
+        </ion-fab-list>
+    </ion-fab>
 </ion-content>
