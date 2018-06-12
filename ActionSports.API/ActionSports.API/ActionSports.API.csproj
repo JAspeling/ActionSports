@@ -12,6 +12,7 @@
     <PackageReference Include="AngleSharp" Version="0.9.9.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="18.3.0" />
   </ItemGroup>
 
   <ItemGroup>

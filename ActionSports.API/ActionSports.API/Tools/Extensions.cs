@@ -22,5 +22,15 @@ namespace ActionSports.API {
         public static string Purify( string input) {
             return input.Trim().Replace("\n", "").Replace("\t", "").Trim();
         }
+
+        public static byte[] FromBase64(this string base64) {
+            Byte[] bytes = Convert.FromBase64String(base64);
+            return bytes;
+        }
+
+        public static string ToBase64(this byte[] bytes) {
+            string base64 = Convert.ToBase64String(bytes);
+            return base64;
+        }
     }
 }

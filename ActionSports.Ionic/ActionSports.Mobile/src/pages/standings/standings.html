@@ -1,12 +1,13 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>
-            Standings - {{league.title}}
-        </ion-title>
-    </ion-navbar>
-</ion-header>
-
 <ion-content>
+    <!-- <ion-segment>
+        <ion-segment-button value="fixtures">
+            Fixtures
+        </ion-segment-button>
+        <ion-segment-button value="standings">
+            Standings
+        </ion-segment-button>
+    </ion-segment> -->
+
     <ion-list>
         <ion-item detail-none (click)="expandItem(standing)" ion-item *ngFor="let standing of standings">
             <h2>{{standing.date}}</h2>
@@ -16,8 +17,8 @@
                 <ion-list no-lines>
                     <ion-item *ngFor="let match of standing.matches">
                         <ion-item>
-                                <h2>{{match.teamA}} vs {{match.teamB}}</h2>
-                                <p>{{match.score}}</p>
+                            <h2>{{match.teamA}} vs {{match.teamB}}</h2>
+                            <p>{{match.score}}</p>
                         </ion-item>
                         <button (click)="showScoresheet($event, match)" ion-button item-end outline small>View</button>
                     </ion-item>
@@ -25,9 +26,6 @@
             </expandable>
         </ion-item>
     </ion-list>
-
-
-
     <!-- <ion-list no-lines >
         <ion-item *ngIf="standings">
             <button ion-item *ngFor="let standing of standings">

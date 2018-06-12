@@ -40,40 +40,7 @@ namespace ActionSports.API.Repositories {
 
                 leagues.Add(league);
             }
-
             return leagues;
-
-
-
-
-            //Leagues.ClearItems();
-            //CQ dom = response.Result;
-            //var table = dom["table tr:not(.LSport)"];
-            //var results = from row in table select row;
-            //foreach (var row in table) {
-            //    var league = new LeagueModel();
-            //    CQ rowDom = row.Render();
-            //    var cols = rowDom["td"];
-
-            //    cols.ForEach((td, index) => {
-            //        CQ text = td.Render();
-            //        var href = "";
-            //        var anchor = td.FirstChild;
-            //        anchor.TryGetAttribute("href", out href);
-            //        switch (index) {
-            //            case 0: league.Title = anchor.Render().Replace("\t", "").Replace("\n", ""); break;
-            //            case 1: league.Fixture = href; break;
-            //            case 2: league.Standing = href; break;
-            //        }
-            //    });
-            //    Leagues.AddOnUIThread(league);
-            //}
-
-
-
-
         }
-
-
     }
 }

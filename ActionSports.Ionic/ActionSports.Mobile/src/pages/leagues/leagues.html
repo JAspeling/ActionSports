@@ -3,24 +3,20 @@
         <ion-title>
             Leagues - {{venue.title}}
         </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
+
 <ion-content>
-    <ion-list no-lines>
-        <ion-item-sliding #sliding *ngFor="let league of leagues">
-            <ion-item #item (click)="toggleState(sliding, item)">
+    <ion-list>
+        <ion-item>
+            <button (click)="navigateToStandings(league)" ion-item *ngFor="let league of leagues"> 
                     <h3>{{league.title}}</h3>
-            </ion-item>
-            <ion-item-options side="right">
-                <button ion-button color="primary">
-                    <ion-icon name="text"></ion-icon>
-                    Fixtures
-                </button>
-                <button (click)="navigateToStandings(league)" ion-button color="secondary">
-                    <ion-icon name="call"></ion-icon>
-                    Standings
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
+            </button>
+        </ion-item>
     </ion-list>
 </ion-content>

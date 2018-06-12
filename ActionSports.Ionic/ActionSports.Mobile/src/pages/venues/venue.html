@@ -1,13 +1,45 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Actionsports Venues
+            ActionSports - Venues
         </ion-title>
+
+        <ion-buttons start>
+
+            <button ion-button right icon-only (click)="refresh()">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+
+            <!-- <button ion-button right>
+                <ion-icon name="menu"></ion-icon>
+            </button> -->
+
+            <button ion-button right menuToggle class="inline">
+                    <ion-icon name="menu"></ion-icon>
+                </button>
+            <!-- <button ion-button icon-only (click)="toggleMenu()">
+                <ion-icon name="menu"></ion-icon>
+            </button> -->
+
+        </ion-buttons>
+
+        <!-- <ion-buttons end>
+
+            <button ion-button icon-only (click)="refresh()">
+                <ion-icon name="refresh"></ion-icon>
+            </button>
+
+            <button ion-button icon-only menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+
+        </ion-buttons> -->
+
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-        
+
     <!-- <ion-content>
             <div class="list">
                 <a class="item" href="#" onclick="window.open('http://www.nraboy.com/contact', '_system', 'location=yes'); return false;">

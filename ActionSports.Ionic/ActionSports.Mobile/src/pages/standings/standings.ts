@@ -1,7 +1,7 @@
 import { BasePage } from './../base-page';
 import { Component } from '@angular/core';
 import { LeagueModel } from './../../classes/LeagueModel';
-import { LoadingController, NavParams, NavController } from 'ionic-angular';
+import { LoadingController, NavParams, NavController, ToastController } from 'ionic-angular';
 import { StandingModel } from '../../classes/StandingModel';
 import { StandingsService } from '../../services/standingsService';
 import { ScoresheetPage } from '../scoresheet/scoresheet';
@@ -19,28 +19,37 @@ export class StandingsPage extends BasePage {
         public loadingCtrl: LoadingController,
         public navParams: NavParams,
         public standingsService: StandingsService,
-        public navCtrl : NavController
+        public navCtrl: NavController,
+        public toastCtrl: ToastController
     ) {
-        super(loadingCtrl, navParams, navCtrl);
+        super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.createLoading('Retrieving Standings...');
 
-        this.league = this.navParams.data.league;
+        this.league = this.navParams.data;
+        if (!this.league) console.warn('No league passed from the venues page.')
     }
 
     ionViewDidLoad(): void {
         this.standings = [];
-        this.loader.present().then(() => {
-            this.standingsService
-                .getStandings(this.league)
-                .then((standings: StandingModel[]) => {
-                    if (standings) {
-                        standings.forEach(standing => {
-                            this.standings.push(standing);
-                        });
-                    }
-                    this.loader.dismiss();
-                });
-        });
+        if (this.league) {
+            this.loader.present().then(() => {
+                this.standingsService
+                    .getStandings(this.league)
+                    .then((standings: StandingModel[]) => {
+                        if (standings) {
+    
+                            standings.forEach(standing => {
+                                this.standings.push(standing);
+                            });
+                        }
+                        this.loader.dismiss();
+                    }, err => {
+                        console.error('Failed to retrieve standings', err);
+                        this.loader.dismiss();
+                        this.presentToast('Failed to retrieve standings');
+                    });
+            });
+        }
     }
 
     expandItem(standing) {
@@ -54,10 +63,9 @@ export class StandingsPage extends BasePage {
         });
     }
 
-    showScoresheet(event : Event, match: MatchModel) {
-        debugger;
+    showScoresheet(event: Event, match: MatchModel) {
         event.stopPropagation();
-        
-        this.navCtrl.push(ScoresheetPage, {match: match}, this.navOptions);
+
+        this.navCtrl.push(ScoresheetPage, { match: match }, this.navOptions);
     }
 }

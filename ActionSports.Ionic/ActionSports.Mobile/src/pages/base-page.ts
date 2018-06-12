@@ -2,10 +2,12 @@ import {
     LoadingController,
     Loading,
     NavParams,
-    NavController
+    NavController,
+    ToastController
 } from 'ionic-angular';
 
 export class BasePage {
+    activeMenu: string;
     loader: Loading;
     navOptions: {
         animation: string;
@@ -14,15 +16,26 @@ export class BasePage {
     constructor(
         public loadingCtrl: LoadingController,
         public navParams: NavParams,
-        public navCtrl: NavController
+        public navCtrl: NavController,
+        public toastCtrl: ToastController
     ) {
         if (this.navOptions) this.navOptions.animation = 'wd-transition';
     }
 
-    createLoading(message: string, spinner: string = 'dots') {
+    createLoading(message: string) {
         this.loader = this.loadingCtrl.create({
             content: message,
-            spinner: spinner
+            dismissOnPageChange: true
         });
+    }
+
+    presentToast(message: string) {
+        let toast = this.toastCtrl.create({
+          message: message,
+          showCloseButton: true,
+          closeButtonText: 'Ok',
+          dismissOnPageChange: true
+        });
+        toast.present();
     }
 }

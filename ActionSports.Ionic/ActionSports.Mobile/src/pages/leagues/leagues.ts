@@ -1,3 +1,4 @@
+import { LeagueInformationPage } from './../league-information/league-information-page';
 import { BasePage } from './../base-page';
 import { Component } from '@angular/core';
 import {
@@ -5,11 +6,11 @@ import {
     ItemSliding,
     LoadingController,
     NavController,
-    NavParams
+    NavParams,
+    ToastController
     } from 'ionic-angular';
 import { LeagueModel } from './../../classes/LeagueModel';
 import { LeaguesService } from './../../services/leaguesService';
-import { StandingsPage } from '../standings/standings';
 import { VenueModel } from '../../classes/VenueModel';
 
 @Component({
@@ -25,9 +26,10 @@ export class LeaguePage extends BasePage {
         public navParams: NavParams,
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
-        public leagueService: LeaguesService
+        public leagueService: LeaguesService,
+        public toastCtrl: ToastController
     ) {
-        super(loadingCtrl, navParams, navCtrl)
+        super(loadingCtrl, navParams, navCtrl, toastCtrl);
         this.venue = this.navParams.data.venue;
         this.createLoading(`Retrieving Leagues for ${this.venue.title}...`);
     }
@@ -43,13 +45,16 @@ export class LeaguePage extends BasePage {
                             league.title = "..." + league.title.substring(league.title.length - 55,league.title.length)
                         this.leagues.push(league);
                     });
+                }, err => {
+                    console.error('Failed to retrieve leagues', err);
                     this.loader.dismiss();
+                    this.presentToast('Failed to retrieve leagues');
                 });
         });
     }
 
     navigateToStandings(league: LeagueModel) {
-        this.navCtrl.push(StandingsPage, { league: league }, this.navOptions);
+        this.navCtrl.push(LeagueInformationPage, { league: league }, this.navOptions);
     }
 
     toggleState(slidingItem: ItemSliding, item: Item) {
@@ -60,20 +65,20 @@ export class LeaguePage extends BasePage {
         // }
     }
 
-    open(itemSlide: ItemSliding, item: Item) {
+    // open(itemSlide: ItemSliding, item: Item) {
 
-        // reproduce the slide on the click
-        itemSlide.setElementClass("active-sliding", true);
-        itemSlide.setElementClass("active-slide", true);
-        itemSlide.setElementClass("active-options-right", true);
-        item.setElementStyle("transform", "translate3d(-144px, 0px, 0px)")
+    //     // reproduce the slide on the click
+    //     itemSlide.setElementClass("active-sliding", true);
+    //     itemSlide.setElementClass("active-slide", true);
+    //     itemSlide.setElementClass("active-options-right", true);
+    //     item.setElementStyle("transform", "translate3d(-144px, 0px, 0px)")
 
-    }
+    // }
 
-    close(slidingItem: ItemSliding) {
-        slidingItem.close();
-        slidingItem.setElementClass("active-slide", false);
-        slidingItem.setElementClass("active-slide", false);
-        slidingItem.setElementClass("active-options-right", false);
-    }
+    // close(slidingItem: ItemSliding) {
+    //     slidingItem.close();
+    //     slidingItem.setElementClass("active-slide", false);
+    //     slidingItem.setElementClass("active-slide", false);
+    //     slidingItem.setElementClass("active-options-right", false);
+    // }
 }

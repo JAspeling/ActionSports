@@ -1,42 +1,41 @@
 import { Component } from '@angular/core';
+import { LoadingController, MenuController, NavController, NavParams, ToastController } from 'ionic-angular';
+
 import { LeaguePage } from '../leagues/leagues';
-import { Loading, LoadingController, NavController } from 'ionic-angular';
 import { VenueModel } from './../../classes/VenueModel';
-import { VenuesService } from '../../services/venuesService';
+import { VenuesService } from './../../services/venuesService';
+import { BasePage } from './../base-page';
 
 @Component({
     selector: 'page-venue',
     templateUrl: 'venue.html'
 })
-export class VenuePage {
+export class VenuePage extends BasePage{
     venues: VenueModel[] = [];
-    loader: Loading;
-    shownGroup = null;
-    items = [];
 
     constructor(
-        public navCtrl: NavController,
         public loadingCtrl: LoadingController,
-        private venuesService: VenuesService
+        public navParams: NavParams,
+        public navCtrl: NavController,
+        public venuesService: VenuesService,
+        public toastCtrl: ToastController,
+        public menu: MenuController
     ) {
-        this.createLoading();
+        super(loadingCtrl, navParams, navCtrl, toastCtrl);
+        this.createLoading('Retrieving Venues...');
 
-        this.items.push({isExpanded: false});
-
+        this.venues = [];
         this.loader.present().then(() => {
-            this.venuesService.getVenues().then((venues: VenueModel[]) => {
+            this.venuesService.getVenues()
+            .then((venues: VenueModel[]) => {
                 venues.forEach(venue => {
                     this.venues.push(venue);
                 });
                 this.loader.dismiss();
+            }, err => {
+                this.loader.dismiss();
+                this.presentToast('Failed to retrieve Venues');
             });
-        });
-    }
-
-    createLoading() {
-        this.loader = this.loadingCtrl.create({
-            content: 'Retrieving Venues...',
-            spinner: 'dots'
         });
     }
 
@@ -47,28 +46,25 @@ export class VenuePage {
         this.navCtrl.push(LeaguePage, { venue: venue }, navOptions);
     }
 
-    toggleGroup(group) {
-        if (this.isGroupShown(group)) {
-            this.shownGroup = null;
-        } else {
-            this.shownGroup = group;
-        }
-    }
-
-    isGroupShown(group) {
-        return this.shownGroup === group;
-    }
-
-    itemExpandHeight: number = 100;
-
-    expandItem(standing) {
-        this.items.map(listItem => {
-            if (standing == listItem) {
-                listItem.isExpanded = !listItem.isExpanded;
-            } else {
-                listItem.isExpanded = false;
-            }
-            return listItem;
+    refresh() {
+        this.venues = [];
+        this.createLoading('Retrieving Venues...');
+        this.loader.present().then(() => {
+            this.venuesService.getVenues()
+            .then((venues: VenueModel[]) => {
+                venues.forEach(venue => {
+                    this.venues.push(venue);
+                });
+                this.loader.dismiss();
+            }, err => {
+                this.loader.dismiss();
+                this.presentToast('Failed to retrieve Venues');
+            });
         });
+    }
+
+    toggleMenu() {
+        const _menu = 'mainMenu';
+        this.menu.enable(true, 'mainMenu');
     }
 }
