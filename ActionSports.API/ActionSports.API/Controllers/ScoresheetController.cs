@@ -23,7 +23,7 @@ namespace ActionSports.API.Controllers {
         // POST: api/Scoresheet
         [HttpPost]
         public string Post([FromBody]MatchModel match) {
-            if (match == null) { return "null"; };
+            if (match == null) { throw new ArgumentNullException("match", "Could not deserialize JSON From Body into a MatchModel object."); };
             try {
                 Logger.LogDebug("Scoresheet Controller hit!");
                 var base64 = ScoresheetRepository.ConvertToPdf(match, match.ScoreHref);

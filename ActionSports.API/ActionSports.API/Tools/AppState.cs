@@ -10,5 +10,7 @@ namespace ActionSports.API {
         public static readonly HttpClient client = new HttpClient();
         public static IConfiguration config = Configuration.Default.WithDefaultLoader();
         public static string baseURL = "http://actionsport.spawtz.com";
+
+        public static string ScoresheetRepo { get; set; }
     }
 }

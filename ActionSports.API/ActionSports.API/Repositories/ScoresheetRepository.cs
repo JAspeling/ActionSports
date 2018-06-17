@@ -19,51 +19,72 @@ namespace ActionSports.API.Repositories {
         // need to do some sort of caching by retrievingthe file only if it has been converted before.
 
         public string ConvertToPdf(MatchModel match, string url) {
-            Logger.LogDebug($@"Converting {url} to PDF...");
-            string pdf_page_size = "A4";
-            PdfPageSize pageSize = (PdfPageSize)Enum.Parse(typeof(PdfPageSize), pdf_page_size, true);
+            try {
+                var fileName = $"{match.TeamA} vs {match.TeamB} - {match.Score}.pdf";
+                fileName = stripIllegalCharacters(fileName);
 
-            string pdf_orientation = "Portrait";
-            PdfPageOrientation pdfOrientation = (PdfPageOrientation)Enum.Parse(typeof(PdfPageOrientation), pdf_orientation, true);
+                var filePath = Path.Combine(AppState.ScoresheetRepo, fileName);
 
-            int webPageWidth = 1024;
+                if (checkIfFileExists(filePath)) {
+                    return File.ReadAllBytes(filePath).ToBase64();
+                } else {
+                    Logger.LogDebug($@"Converting {url} to PDF...");
+                    string pdf_page_size = "A4";
+                    PdfPageSize pageSize = (PdfPageSize)Enum.Parse(typeof(PdfPageSize), pdf_page_size, true);
 
-            int webPageHeight = 0;
+                    string pdf_orientation = "Portrait";
+                    PdfPageOrientation pdfOrientation = (PdfPageOrientation)Enum.Parse(typeof(PdfPageOrientation), pdf_orientation, true);
 
-            // instantiate a html to pdf converter object
-            HtmlToPdf converter = new HtmlToPdf();
+                    int webPageWidth = 1024;
 
-            // set converter options
-            converter.Options.PdfPageSize = pageSize;
-            converter.Options.PdfPageOrientation = pdfOrientation;
-            converter.Options.WebPageWidth = webPageWidth;
-            converter.Options.WebPageHeight = webPageHeight;
+                    int webPageHeight = 0;
 
-            PdfDocument doc = null;
-            // create a new pdf document converting an url
-            doc = converter.ConvertUrl(url);
+                    // instantiate a html to pdf converter object
+                    HtmlToPdf converter = new HtmlToPdf();
 
-            var fileName = $"{match.Score}.pdf";
+                    // set converter options
+                    converter.Options.PdfPageSize = pageSize;
+                    converter.Options.PdfPageOrientation = pdfOrientation;
+                    converter.Options.WebPageWidth = webPageWidth;
+                    converter.Options.WebPageHeight = webPageHeight;
 
-            Logger.LogDebug($"Saving '{fileName}'...");
+                    PdfDocument doc = null;
+                    // create a new pdf document converting an url
+                    doc = converter.ConvertUrl(url);
 
-            // save pdf document
-            doc.Save(fileName);
-            Logger.LogDebug($"'{fileName}' Saved!");
-            // close pdf document
-            doc.Close();
+                    Logger.LogDebug($"Saving '{filePath}'...");
 
+                    // save pdf document
+                    doc.Save(filePath);
+                    Logger.LogDebug($"'{filePath}' Saved!");
+                    // close pdf document
+                    doc.Close();
 
-            Logger.LogDebug($"Closing '{fileName}'...");
+                    Logger.LogDebug($"Closing '{filePath}'...");
+                    Logger.LogDebug($"Converting File Bytes to Base64...");
 
-            var filePath = Path.GetFullPath(fileName);
+                    var base64 = File.ReadAllBytes(filePath).ToBase64();
 
-            Logger.LogDebug($"Converting File Bytes to Base64...");
+                    Logger.LogDebug($"Done!");
+                    return base64;
+                }
+            } catch (Exception ex) {
+                ex.CustomLog(Logger, "Failed to convert HTML to PDF and save the file.");
+                throw;
+            }
+        }
 
-            var base64 = File.ReadAllBytes(filePath).ToBase64();
+        private static string stripIllegalCharacters(string filePath) {
+            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            foreach (char c in invalid) {
+                filePath = filePath.Replace(c.ToString(), "");
+            }
 
-            Logger.LogDebug($"Done!");
-            return base64;
+            return filePath;
+        }
+
+        bool checkIfFileExists(string filePath) {
+            return File.Exists(filePath);
         }
     }
 }

@@ -20,13 +20,12 @@ namespace ActionSports.API {
                 .UseKestrel()
                 .UseConfiguration(config)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .ConfigureLogging((hostingContext, logging) =>
-                {
-                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                    logging.AddConsole();
-                    logging.AddDebug();
+                .ConfigureLogging((webhostContext, builder) => {
+                    builder.AddConfiguration(webhostContext.Configuration.GetSection("Logging"))
+                    .AddConsole()
+                    .AddDebug();
                 })
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
