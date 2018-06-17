@@ -1,7 +1,7 @@
 import { ICachableService, ICachedItem } from './../interfaces/ICachableService';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file';
+import { File, FileError } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AppState } from '../classes/AppState';
@@ -27,7 +27,7 @@ export class ScoresheetService implements ICachableService {
         const clone = new MatchModel(match);
         clone.scoreHref = AppState.baseUrl + match.scoreHref;
         const cachedItem = this.cachedItems.find(cacheItem => cacheItem.title == match.score)
-        if (cachedItem) {
+        if (cachedItem && cachedItem.cachedItems) {
             return new Promise((resolve, reject) => {resolve(cachedItem.cachedItems)});
         } else
         return this.httpClient
@@ -40,7 +40,7 @@ export class ScoresheetService implements ICachableService {
         return new Promise((resolve, reject) => {
             var realData = base64.split(',')[1];
             let blob = this.b64toBlob(base64, 'application/pdf', 512);
-            
+
             let imageName = `${name}.pdf`;
             const ROOT_DIRECTORY = 'file:///sdcard//';
             const downloadFolderName = 'actionSportsTemp';
@@ -48,14 +48,17 @@ export class ScoresheetService implements ICachableService {
 
             this.file
             .checkFile(ROOT_DIRECTORY + downloadFolderName, imageName).then((exists) => {
-                resolve(new MessageObject({message: `${match.teamA} vs ${match.teamB} - ${match.score}`, fileUrl: fileDir}))
+                resolve(new MessageObject({message: `${match.teamA} vs ${match.teamB} - ${match.score}`, fileUrl: fileDir}));
             }, err => {
                 this.file.writeFile(ROOT_DIRECTORY + downloadFolderName, imageName, blob)
                 .then(() => {
-                    resolve(new MessageObject({message: `${match.teamA} vs ${match.teamB} - ${match.score}`, fileUrl: fileDir}))
-                }).catch(err => {
-                    console.log('error writing blob');
-                    reject(err);
+                    resolve(new MessageObject({message: `${match.teamA} vs ${match.teamB} - ${match.score}`, fileUrl: fileDir}));
+                }).catch((err: FileError) => {
+                    switch (err.code) {
+                        // File Exists
+                        case 12: resolve(new MessageObject({message: `${match.teamA} vs ${match.teamB} - ${match.score}`, fileUrl: fileDir}));
+                        default: reject(err);
+                    }
                 });
             })                
         });

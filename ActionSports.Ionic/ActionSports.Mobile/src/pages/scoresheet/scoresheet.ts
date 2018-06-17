@@ -36,11 +36,12 @@ export class ScoresheetPage extends BasePage {
                 this.scoresheetService.addToCache(this.match.score, base64);
                 this.scoresheetService.saveBase64(base64, `${this.match.teamA} vs ${this.match.teamB} - ${this.match.score}`, this.match)
                     .then((messageObject: MessageObject) => {
+                            debugger;
                             this.socialSharing.shareViaWhatsApp(messageObject.message, messageObject.fileUrl).then(() => {
-                            this.loader.dismiss();
-                        }).catch(err => {
-                            this.presentToast('Failed to send file via whatsapp');
-                        });
+                                this.loader.dismiss();
+                            }).catch(err => {
+                                this.presentToast('Failed to send file via whatsapp');
+                            });
                     }, err => {
                         this.presentToast('Failed to save file to Device');
                         this.loader.dismiss();
