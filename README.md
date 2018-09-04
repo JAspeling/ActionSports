@@ -16,3 +16,7 @@ Roadmap:
  * Push Notifications
  * In-app chat
  * Sport Filtering (My Team only, netball, hockey, cricket)
+
+ ### Sample Video found here
+<a href="assets/app_example.mp4" target="_blank"><img src="assets/logo.png" 
+alt="Sample Video here" width="240" height="180" border="10" /></a>
